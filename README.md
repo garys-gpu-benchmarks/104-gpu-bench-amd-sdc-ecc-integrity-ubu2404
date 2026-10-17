@@ -17,7 +17,7 @@ Results are written to `results/benchmark.db` and `results/summary.json`.
 
 This workload is executed on the validation host after the repository is copied there. `setup.sh` and `run_benchmark.sh` do not open an outbound SSH session.
 
-Prerequisites: Ubuntu 24.04; AMD; Python 3.12.3; root or sudo for `setup.sh`. Framework: Bash, SQLite, Python, PyYAML, ROCm Runtime, PyTorch-ROCm. This is a host benchmark, not a laptop `pip install` project.
+Prerequisites: Ubuntu 24.04; AMD; Python 3.14.N (uv-managed; all benchmark venvs). System Python 3.12.3 retained for OS and setup scripts only; root or sudo for `setup.sh`. Framework: Bash, SQLite, Python, PyYAML, ROCm Runtime, PyTorch-ROCm. This is a host benchmark, not a laptop `pip install` project.
 
 ```mermaid
 flowchart LR
@@ -111,7 +111,7 @@ Runs a PyTorch GPU (or CPU) int32 buffer check that writes 1 to even-index eleme
 - OS: Ubuntu 24.04
 - GPU vendor: AMD
 - Framework family: Bash, SQLite, Python, PyYAML, ROCm Runtime, PyTorch-ROCm
-- Python: Python 3.12.3
+- Python: Python 3.14.N (uv-managed; all benchmark venvs). System Python 3.12.3 retained for OS and setup scripts only
 
 ### Reference validation environment
 
@@ -131,8 +131,8 @@ Ubuntu 24.04 / AMD / Bash, SQLite, Python, PyYAML, ROCm Runtime, PyTorch-ROCm
 |---|---|
 | OS | Ubuntu 24.04 |
 | Kernel | kernel 6.8.0 |
-| Python | Python 3.12.3 |
-| ROCm | ROCm 7.2.1 |
+| Python | Python 3.14.N (uv-managed; all benchmark venvs). System Python 3.12.3 retained for OS and setup scripts only |
+| ROCm | ROCm 10.1.0 |
 | rocBLAS | N/A - rocBLAS not used |
 
 Runs a PyTorch GPU (or CPU) int32 buffer check that writes 1 to even-index elements and verifies them, then reports a 0-100 pass rate in even_word_store_pass_rate. duration: wall-clock cap (values >=10000 treated as milliseconds). num_iterations: verify loops.
