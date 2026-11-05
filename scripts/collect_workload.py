@@ -171,16 +171,8 @@ def main() -> int:
         for _ in range(iters):
             buf = torch.zeros(n, device=device, dtype=torch.int32)
             if pattern in {"walking-1s", "walking-ones", "walking_1s"}:
-                # arange() is int64. int32 << int64 promotes to int64, copy_
-                # into this int32 buffer truncates bit 31, and the compare
-                # then fails every loop. Stay in int32 for fill and verify.
                 shifts = (torch.arange(n, device=device) % 32).to(dtype=torch.int32)
-                expected = torch.bitwise_left_shift(
-                    torch.ones(n, device=device, dtype=torch.int32),
-                    shifts,
-                )
-                if expected.dtype != buf.dtype:
-                    expected = expected.to(dtype=buf.dtype)
+                expected = (torch.ones(n, device=device, dtype=torch.int32) << shifts).to(dtype=torch.int32)
                 buf.copy_(expected)
                 mismatch_count = int((buf != expected).sum().item())
             else:
